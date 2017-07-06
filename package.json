@@ -1,0 +1,56 @@
+{
+  "name": "ceri-progress",
+  "description": "A simple progress bar with included overlay",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ceri-comps",
+  "author": {
+    "name": "Paul Pflugradt",
+    "email": "paul.pflugradt@gmail.com"
+  },
+  "license": "MIT",
+  "main": "progress.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ceri-comps/ceri-progress"
+  },
+  "files": [
+    "*.js",
+    "*.scss"
+  ],
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {
+    "ceri": "^1.0.20"
+  },
+  "devDependencies": {
+    "ceri-compiler": "^1.1.1",
+    "ceri-dev-server": "^1.0.7",
+    "ceri-materialize": "^1.0.1",
+    "coffee-loader": "^0.7.3",
+    "coffee-script": "^1.12.6",
+    "gh-pages": "^1.0.0",
+    "materialize-css": "^0.99.0",
+    "node-sass": "^4.5.3",
+    "sass-loader": "^6.0.6",
+    "script-runner": "^0.1.7"
+  },
+  "keywords": [
+    "progress",
+    "component",
+    "ceri"
+  ],
+  "readmeFilename": "README.md",
+  "scripts": {
+    "build:coffee": "coffee -c -o . src/*.coffee",
+    "build:bundle": "ceri-compiler materialize.js progress.js",
+    "build": "run-npm build:*",
+    "dev": "ceri-dev-server",
+    "watch": "ceri-dev-server --test --watch",
+    "test": "ceri-dev-server --test",
+    "preversion": "npm test",
+    "version": "npm run build && git add .",
+    "postversion": "git push && git push --tags && npm publish",
+    "ghpages": "ceri-dev-server --static static/ && gh-pages -d static"
+  }
+}

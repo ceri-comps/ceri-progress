@@ -1,0 +1,9 @@
+node_modules
+*.sublime-project
+*.sublime-workspace
+.vscode
+npm-debug.log
+static
+*.js
+yarn-error.log
+shrinkwrap.yaml
