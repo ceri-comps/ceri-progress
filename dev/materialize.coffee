@@ -24,8 +24,6 @@ module.exports = createView
           @progress.hide()
           ), 5500
       ),1000
-  tests: (el) ->
-    describe "ceri-progress", ->
-      after ->
-        el.remove()
-      it "should work", ->
+  tests: ceriProgress:  ->
+    it "should work", =>
+      should.exist @
