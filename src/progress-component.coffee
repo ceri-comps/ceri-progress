@@ -19,8 +19,12 @@ module.exports =
     zIndex:
       type: Number
       default: 995
+    timeout:
+      type: Number
+      default: 5000
   data: ->
     percent: -2
+    options: null
   initStyle:
     top: 0
     left: 0
@@ -28,13 +32,14 @@ module.exports =
     bottom: 0
     position: "absolute"
     display:"block"
-  computedStyle: ->
-    zIndex: @zIndex
+  computedStyle: 
+    this: -> 
+      zIndex: if @options?.zIndex? then @options.zIndex else @zIndex
   methods:
     show: (o) ->
       @percent = -1
       o.el.appendChild(@)
-      @zIndex = o.zIndex if o.zIndex?
+      @options = o
       @animation = @$animate @$cancelAnimation @animation,
         @util.assign {}, @enter, o, {el: @}
       @startTimeout(o)
@@ -42,20 +47,20 @@ module.exports =
       @animation = @$animate @$cancelAnimation @animation,
         @util.assign {el: @, done: -> @remove()}, @leave
       @clearTimeout()
+      @options = null
     startTimeout: (o) ->
-      o = @timeout if not o and @timeout
-      if o?
-        o.timeout = 500000 if o.onTimeout and not o.timeout
+      if (o ?= @options)?
+        @clearTimeout(o)
+        o.timeout ?= @timeout or 5000 if o.onTimeout
         if o.timeout
-          @timeout = o
-          o.object = setTimeout (=>
+          o.clearTimeout = setTimeout (=>
             o.onTimeout?()
             @hide()
             ), o.timeout
-    clearTimeout: ->
-      if (o = @timeout)?
-        clearTimeout(o.object)
-        @timeout = null
+    clearTimeout: (o) ->
+      if (o ?= @options)?.clearTimeout?
+        clearTimeout(o.clearTimeout)
+        o.clearTimeout = null
   watch:
     percent: 
       initial: false

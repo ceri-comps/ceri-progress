@@ -1,4 +1,4 @@
-require "./materialize.config.scss"
+require "./materialize.config.styl"
 window.customElements.define "ceri-progress", require("../src/progress.coffee")(require("../src/materialize.coffee"))
 createView = require "ceri-dev-server/lib/createView"
 module.exports = createView
